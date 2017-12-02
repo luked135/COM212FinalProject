@@ -6,6 +6,3 @@ and will store the user’s profile data in a single text file. This project wil
 of a larger social networking platform that manages many user profiles with a mobile app or a web-based
 user interface and a database that stores the data on a web server. In this project, our platform will focus
 on a single user instance, with a defined set of interactions.
-
-
-Edit
