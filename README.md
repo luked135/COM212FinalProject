@@ -1,4 +1,4 @@
-# COM212FinalProject
+# COM212Final Project
 
 In this project we will create a console-based social networking profile that focuses on a single user’s
 account details, events, friends, and a timeline of posts. It will run in the terminal or command prompt,
