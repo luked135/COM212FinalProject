@@ -12,7 +12,6 @@ public class MySocialProfile {
 	private BufferedWriter infoWriter;
 	private FileWriter newFile;
 	
-	
 	private BufferedReader infoReader;
 	private FileReader fileRead;
 	
@@ -32,19 +31,21 @@ public class MySocialProfile {
 	
 	public void checkInfo(){ //make this return a boolean later and also put this in as a parameter: String userName, String userPassword
 		try{
-			String line = infoWriter.readLine();
+			/*
+			String line = infoReader.readLine();
 			int count = 1;
 			while (line != null) {
 				System.out.println(count++ + ": " + line);
-				line = infoWriter.readLine();
+				line = infoReader.readLine();
 			}
+			*/
 			
-			/*
-			String name = infoWriter.readLine();
-			String password = infoWriter.readLine();
+			String name = infoReader.readLine();
+			String password = infoReader.readLine();
 			System.out.println(name);
 			System.out.println(password);
-
+			
+			/*
 			for (int i = 1; i < 4; i++){
 				String password = infoWriter.readline();
 			}
@@ -55,11 +56,20 @@ public class MySocialProfile {
 		}
 	}
 
-	public void cleanup(){
+	public void cleanupW(){
 		try{
 			infoWriter.close();
 			newFile.close();
-			fileRead.close()
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void cleanupR(){
+		try{
+			fileRead.close();
 			infoReader.close();
 		}
 		catch (IOException e) {
@@ -68,10 +78,20 @@ public class MySocialProfile {
 		
 	}
 	
-	public void createFile() {
+	public void createWriteFile() {
 		try {
 			newFile = new FileWriter("MySocialProfile.txt");
 			infoWriter = new BufferedWriter(newFile);
+			
+		}
+		
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createReadFile() {
+		try {
 			
 			fileRead = new FileReader("MySocialProfile.txt");
 			infoReader = new BufferedReader(fileRead);
@@ -86,20 +106,26 @@ public class MySocialProfile {
 	public static void main(String[] args) {
 		MySocialProfile person = new MySocialProfile();
 		
-		person.createFile();
-		person.writeInfo("Luke Karis");
-		person.writeInfo("Password!!");
-		person.writeInfo("2020");
-		person.writeInfo("lkaris@conncoll.edu");
-		person.cleanup();
+		person.createWriteFile();
+		person.writeInfo("a");
+		person.writeInfo("b");
+		person.writeInfo("c");
+		person.writeInfo("d");
+		person.cleanupW();
 		
+		person.createReadFile();
+		person.checkInfo();
+		
+		person.cleanupR();
+		
+		/*
 		MySocialProfile person2 = new MySocialProfile();
 		
 		person2.createFile();
 		person2.checkInfo();
 		person2.cleanup();
 		
-		/*
+	
 		person.writeInfo("This project" + "\n");
 		person.writeInfo("is tricky");
 		person.cleanup();
