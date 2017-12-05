@@ -24,9 +24,10 @@ public class MySocialProfileApp {
 			switch(choice){
 				
 				case 'c':
+					MySocialProfile person = new MySocialProfile();
+					person.createFile();
 					System.out.println("\n Please enter your first and last name seperated by a space");
 					String name = getInfo.nextLine();
-					MySocialProfile person = new MySocialProfile(name);
 					person.writeInfo(name);
 					
 					System.out.println("\n Please enter your email address");
