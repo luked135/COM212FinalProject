@@ -14,6 +14,8 @@ public class MySocialProfile {
 	
 	private BufferedReader infoReader;
 	private FileReader fileRead;
+
+	ArrayStack timeline = new ArrayStack();
 	
 	public MySocialProfile() { 
 		
@@ -119,7 +121,7 @@ public class MySocialProfile {
 	
 	public void postTimeline (String post) {
 		timeline.push(post);
-		System.out.println(timeline);
+		System.out.println(timeline.top());
 	}
 	
 	public static void main(String[] args) {
