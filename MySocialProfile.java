@@ -88,25 +88,47 @@ public class MySocialProfile {
 			e.printStackTrace();
 		}
 	}
+
+	public void displayProfile() {
+		try {
+			FileReader fileIn = new FileReader("MySocialProfile.txt");
+			BufferedReader bufReader = new BufferedReader(fileIn);
+			
+			String line = bufReader.readLine();
+			System.out.println("Name: " + line);
+			
+			line = bufReader.readLine();
+			line = bufReader.readLine();
+			System.out.println("Email: " + line);
+
+			line = bufReader.readLine();
+			System.out.println("Class Year: " + line);
+			line = bufReader.readLine();
+
+			while (line != null) {
+				System.out.println(line);
+				line = bufReader.readLine();
+			}
+
+			bufReader.close();
+			fileIn.close();
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	public void postTimeline (String post) {
+		timeline.push(post);
+		System.out.println(timeline);
+	}
 	
 	public static void main(String[] args) {
 		MySocialProfile person = new MySocialProfile();
-		
-		person.createWriteFile();
-		person.writeInfo("a");
-		person.writeInfo("b");
-		person.writeInfo("c");
-		person.writeInfo("d");
-		person.cleanupWriter();
-		
 		person.createReadFile();
-		
-		System.out.println(person.checkInfo("a", "b"));
-		System.out.println(person.checkInfo("b", "c"));
-		System.out.println(person.checkInfo("a", "d"));
-		System.out.println(person.checkInfo("c", "b"));
-		
+		person.displayProfile();
+		person.postTimeline("I made a post!");
+		person.postTimeline("I did it again!");
+		person.postTimeline("One more time");
 		person.cleanupReader();
 		
 		/*
