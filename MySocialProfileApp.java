@@ -13,21 +13,28 @@ public class MySocialProfileApp {
 	public static void main(String[] args) throws IOException { 
 		
 		int choice;
+		int loginChoice;
 		Scanner getInfo = new Scanner(System.in);
 		
 		
 		do {
-			System.out.println("\n Enter a letter: \n\n quit program (q)");
-			System.out.println("\n create a new account/profile (c) \n Load an existing profile (l)");
+			System.out.println("\n Enter a letter: \n\n Quit program (q)");
+			System.out.println("\n Create a new account/profile (c) \n Load an existing profile (l)");
 			choice = getChar();
 			
 			switch(choice){
 				
 				case 'c':
+					MySocialProfile person = new MySocialProfile();
+					person.createWriteFile();
+					
 					System.out.println("\n Please enter your first and last name seperated by a space");
 					String name = getInfo.nextLine();
-					MySocialProfile person = new MySocialProfile(name);
 					person.writeInfo(name);
+					
+					System.out.println("\n Please enter your preferred password");
+					String password = getInfo.nextLine();
+					person.writeInfo(password);
 					
 					System.out.println("\n Please enter your email address");
 					String emailAddress = getInfo.nextLine();
@@ -37,15 +44,66 @@ public class MySocialProfileApp {
 					String classYear = getInfo.nextLine();
 					person.writeInfo(classYear);
 					
-					System.out.println("\n Please enter your preferred password");
-					String password = getInfo.nextLine();
-					person.writeInfo(password);
-					person.cleanup();
+					person.cleanupWriter();
 					break;
 					
 				case 'l':
+					MySocialProfile loginPerson = new MySocialProfile();
+					loginPerson.createReadFile();
 					
+					System.out.println("\n Please enter your username (which should be your first and last name seperated by a space)");
+					String lName = getInfo.nextLine();
+					System.out.println("\n Please enter your password");
+					String lPassword = getInfo.nextLine();
+					
+					if(loginPerson.checkInfo(lName, lPassword)) {
+						do {
+							System.out.println("\n Enter a letter: \n\n Post to your timeline (p) \n Add an event (e)"); //Do we want to welcome the user?
+							System.out.println(" View your friends (v) \n Add/remove friends (f) \n\n Log out (l)");
+							loginChoice = getChar();
+							
+							switch(loginChoice){
+								case 'p':
+									System.out.println("p");
+									break;
+								
+								case 'e':
+									System.out.println("e");
+									break;
+									
+								case 'v':
+									System.out.println("v");
+									break;
+									
+								case 'f':
+									System.out.println("f");
+									break;
+									
+								case 'l':
+									System.out.println("\nLogged Out Successfully");
+									break;
+								
+								default:
+									System.out.print("\nNot a valid entry.\n");
+							}
+						}
+						while (loginChoice != 'l'); {
+							
+						}
+					}
+					else {
+						System.out.println("Login information is incorrect");
+					}
+					
+					loginPerson.cleanupReader();
 					break;
+				
+				case 'q':
+					System.out.println("\nExited Program Successfully");
+					break;
+					
+				default:
+					System.out.print("\nNot a valid entry.\n");
 			}
 		}
 		while(choice != 'q'); {
