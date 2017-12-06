@@ -18,7 +18,6 @@ public class MySocialProfile {
 	ArrayStack timeline = new ArrayStack();
 	
 	public MySocialProfile() { 
-		
 	}
 	
 	public void writeInfo(String info){
@@ -29,6 +28,20 @@ public class MySocialProfile {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public void writeTimeline(String info){
+		createWriteFile();
+		try{
+			for (int i = 1; i < 6; i++) {
+				infoReader.readLine();
+			}
+				System.out.println(infoReader.readLine());
+				//infoWriter.write(info);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public boolean checkInfo(String userName, String userPassword){ //make this return a boolean later and also put this in as a parameter: String userName, String userPassword
@@ -121,16 +134,18 @@ public class MySocialProfile {
 	
 	public void postTimeline (String post) {
 		timeline.push(post);
+
 		System.out.println(timeline.top());
 	}
 	
 	public static void main(String[] args) {
 		MySocialProfile person = new MySocialProfile();
 		person.createReadFile();
+		//person.createWriteFile();
+		//person.displayProfile();
+		//person.writeInfo("Testing");
+		person.writeTimeline("I like dogs");
 		person.displayProfile();
-		person.postTimeline("I made a post!");
-		person.postTimeline("I did it again!");
-		person.postTimeline("One more time");
 		person.cleanupReader();
 		
 		/*
