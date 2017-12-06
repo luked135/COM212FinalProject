@@ -20,6 +20,30 @@ public class MySocialProfile {
 	public MySocialProfile() { 
 	}
 	
+	public void createWriteFile() {
+		try {
+			newFile = new FileWriter("MySocialProfile.txt");
+			infoWriter = new BufferedWriter(newFile);
+			
+		}
+		
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void createReadFile() {
+		try {
+			
+			fileRead = new FileReader("MySocialProfile.txt");
+			infoReader = new BufferedReader(fileRead);
+		}
+		
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void writeInfo(String info){
 		try{
 			infoWriter.write(info + "\n");
@@ -29,25 +53,117 @@ public class MySocialProfile {
 		}
 		
 	}
-
-	public void writeTimeline(String info){
-		createWriteFile();
-		try{
-			for (int i = 1; i < 6; i++) {
-				infoReader.readLine();
-			}
-				System.out.println(infoReader.readLine());
-				//infoWriter.write(info);
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-	}
 	
 	public boolean checkInfo(String userName, String userPassword){ //make this return a boolean later and also put this in as a parameter: String userName, String userPassword
 		try{
 			
 			String name = infoReader.readLine();
+			String password = infoReader.readLine();
+			
+			return(name.equals(userName) && password.equals(userPassword));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void displayProfile() {
+		try {
+
+			createReadFile();
+			String line = infoReader.readLine();
+			System.out.println("Name: " + line);
+			
+			line = infoReader.readLine();
+			line = infoReader.readLine();
+			System.out.println("Email: " + line);
+
+			line = infoReader.readLine();
+			System.out.println("Class Year: " + line);
+			line = infoReader.readLine();
+
+			while (line != null) {
+				System.out.println(line);
+				line = infoReader.readLine();
+			}
+
+			cleanupReader();
+		}  
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void postTimeline (String post) {
+		timeline.push(post);
+
+		System.out.println(timeline.top());
+	}
+	
+	public void writeTimeline(String info){
+		createWriteFile();
+		try{
+			for (int i = 1; i < 4; i++) {
+				infoReader.readLine();
+			}
+				infoWriter.write(info);
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+	}
+
+public void cleanupWriter(){
+		try{
+			infoWriter.close();
+			newFile.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void cleanupReader(){
+		try{
+			fileRead.close();
+			infoReader.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public static void main(String[] args) {
+		MySocialProfile person = new MySocialProfile();
+		person.createReadFile();
+		//person.createWriteFile();
+		//person.displayProfile();
+		//person.writeInfo("Testing");
+		person.writeTimeline("I like dogs");
+		person.displayProfile();
+		person.cleanupReader();
+		
+		/*
+		MySocialProfile person2 = new MySocialProfile();
+		
+		person2.createFile();
+		person2.checkInfo();
+		person2.cleanup();
+		
+	
+		person.writeInfo("This project" + "\n");
+		person.writeInfo("is tricky");
+		person.cleanup();
+		*/
+		
+		
+	}
+	
+}
+();
 			String password = infoReader.readLine();
 			
 			return(name.equals(userName) && password.equals(userPassword));
