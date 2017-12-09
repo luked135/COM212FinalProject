@@ -1,0 +1,108 @@
+public class EventArrayPriorityQueue {
+	
+	int n; //Size of the heap
+	Event[] E;
+	
+	public EventArrayPriorityQueue(int capacity) {
+		n = 0;
+		E = new Event[capacity];
+	}
+	
+	public boolean isEmpty() {
+		return n==0;
+	}
+	
+	public int size() {
+		return n;
+	}
+	
+	private int leftChildIndex(int pIndex) {
+		return pIndex * 2;
+	}
+	
+	private int rightChildIndex(int pIndex) {
+		return (pIndex * 2) + 1;
+	}
+	
+	private int parentIndex(int cIndex) {
+		return cIndex / 2;
+	}
+	
+	public Event getMin() {
+		return E[1]; 
+	}
+	
+	public void insert(Event newEvent) {
+		E[n+1] = newEvent;
+		n++;
+		int cIndex = n;
+		int pIndex = parentIndex(cIndex);
+		
+		while(pIndex >= 1 && E[cIndex].getKey() < E[pIndex].getKey()) {
+			swap(pIndex, cIndex);
+			cIndex = pIndex;
+			pIndex = parentIndex(pIndex);
+		}
+	}
+	
+	public Event extractMin() {
+		swap(1, n);
+		n--;
+		int pIndex = 1;
+		int lCIndex;
+		int rCIndex;
+		
+		while(hasSmallerChild(pIndex)) {
+			lCIndex = leftChildIndex(pIndex);
+			rCIndex = rightChildIndex(pIndex);
+			int smallChildIndex;
+			
+			if(lCIndex <= n && rCIndex <= n) {
+				if(E[lCIndex].getKey() < E[rCIndex].getKey()){
+					swap(pIndex, lCIndex);
+					pIndex = lCIndex;
+				}
+				else {
+					swap(pIndex, rCIndex);
+					pIndex = rCIndex;
+				}
+			}
+			else {
+				swap(pIndex, lCIndex);
+				pIndex = lCIndex;
+			}
+		}
+		return E[n+1];
+	}
+	
+	public boolean hasSmallerChild(int pIndex) {
+		int lCIndex = leftChildIndex(pIndex);
+		int rCIndex = rightChildIndex(pIndex);
+		
+		if (lCIndex <= n && E[lCIndex].getKey() < E[pIndex].getKey())
+			return true;
+		
+		else if (rCIndex <= n && E[rCIndex].getKey() < E[pIndex].getKey())
+			return true;
+		
+		return false;
+	}
+	
+	private void swap(int pIndex, int cIndex) {
+		Event temp = E[cIndex];
+		E[cIndex] = E[pIndex];
+		E[pIndex] = temp;
+	}
+	
+	public static void main(String[] args){
+		EventArrayPriorityQueue newEAPQ = new EventArrayPriorityQueue(100);
+		
+		newEAPQ.insert(new Event(12, 20, 2017, 10, 30, "Ice Skating"));
+		newEAPQ.insert(new Event(9, 10, 2018, 22, 12, "Hocky Game"));
+		newEAPQ.insert(new Event(3, 1, 2018, 11, 5, "Movie Night"));
+		newEAPQ.insert(new Event(4, 9, 2005, 4, 10, "Soccer Game"));
+		newEAPQ.insert(new Event(8, 13, 2019, 3, 11, "Trivia Night"));
+		
+		System.out.println(newEAPQ.extractMin());
+	}
+}
