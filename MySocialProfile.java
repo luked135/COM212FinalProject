@@ -17,6 +17,8 @@ public class MySocialProfile {
 	private BufferedReader infoReader;
 	private FileReader fileRead;
 	
+	ArrayStack timeline = new ArrayStack();
+	
 	//private Calender userCal;
 
 	private ArrayStack<String> timeline = new ArrayStack<String>();
@@ -86,6 +88,13 @@ public class MySocialProfile {
 			System.out.println("Class Year: " + line);
 			line = infoReader.readLine();
 			
+			System.out.println("Timeline posts:");
+			for (int t = 1; t < 4; t++) {
+				if (timeline.size()-t >= 0 && timeline.peek(timeline.size()-t) != null) {
+					System.out.println(timeline.peek(timeline.size()-t));
+				}
+			}
+
 			printQueue();
 			
 			//Timeline posts will go here
