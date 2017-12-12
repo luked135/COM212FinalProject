@@ -26,7 +26,7 @@ public class MySocialProfileApp {
 				
 				case 'c':
 					MySocialProfile person = new MySocialProfile();
-					person.createWriteFile();
+					person.createWriteFile("MySocialProfile.txt");
 					
 					System.out.println("\n Please enter your first and last name seperated by a space");
 					String name = getInfo.nextLine();
@@ -43,13 +43,17 @@ public class MySocialProfileApp {
 					System.out.println("\n Please enter your class year");
 					String classYear = getInfo.nextLine();
 					person.writeInfo(classYear);
+
+					person.writeInfo("You have no events!");
+					person.writeInfo("You have no posts on your timeline!");
+					person.writeInfo("You have no friends!");
 					
 					person.cleanupWriter();
 					break;
 					
 				case 'l':
 					MySocialProfile loginPerson = new MySocialProfile();
-					loginPerson.createReadFile();
+					//loginPerson.createReadFile();
 					
 					System.out.println("\n Please enter your username (which should be your first and last name seperated by a space)");
 					String lName = getInfo.nextLine();
@@ -57,32 +61,54 @@ public class MySocialProfileApp {
 					String lPassword = getInfo.nextLine();
 					
 					if(loginPerson.checkInfo(lName, lPassword)) {
+						loginPerson.loginUser();
+
 						do {
 							System.out.println("\n Enter a letter: \n\n Post to your timeline (p) \n Add an event (e)"); //Do we want to welcome the user?
 							System.out.println(" View your friends (v) \n Add/remove friends (f) \n\n Log out (l)");
 							loginChoice = getChar();
-							
+							//loginPerson.loginUser();
 							switch(loginChoice){
 								case 'p':
-									System.out.println("p");
+									System.out.println("Please enter the text you would like in your timeline post.");
+									String post = getInfo.nextLine();
+									loginPerson.postTimeline(post);
+									loginPerson.displayProfile();
 									break;
 								
 								case 'e':
-									System.out.println("e");
+									System.out.println("Please enter a description of your event: ");
+									String description = getInfo.nextLine();
+									System.out.println("Please enter the month of your event in the form of a number (MM): ");
+									int month = getInfo.nextInt();								
+									System.out.println("Please enter the day of your event (DD): ");
+									int day = getInfo.nextInt();	
+									System.out.println("Please enter the year of your event (YYYY): "); 					
+									int year = getInfo.nextInt();	
+									System.out.println("Please enter the hour of the day of your event (0-23): ");
+									int hour = getInfo.nextInt();	
+									System.out.println("Please enter the minute of the hour of your event (00-59): ");
+									int minute = getInfo.nextInt();
+									loginPerson.makeEvent(month, day, year, hour, minute, description);
 									break;
 									
 								case 'v':
-									System.out.println("v");
+									loginPerson.displayFriends();
 									break;
 									
 								case 'f':
-									System.out.println("f");
+									System.out.println("Please enter the email of the friend you want to add to your list, or the friend you want to remove:");
+									String friend = getInfo.nextLine();
+									loginPerson.manageFriends(friend);
 									break;
 									
 								case 'l':
+									loginPerson.logoutUser();
 									System.out.println("\nLogged Out Successfully");
 									break;
 								
+								case 'd':
+									loginPerson.displayProfile();
 								default:
 									System.out.print("\nNot a valid entry.\n");
 							}
@@ -95,7 +121,7 @@ public class MySocialProfileApp {
 						System.out.println("Login information is incorrect");
 					}
 					
-					loginPerson.cleanupReader();
+					//loginPerson.cleanupReader();
 					break;
 				
 				case 'q':
