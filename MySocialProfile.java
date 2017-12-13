@@ -22,6 +22,9 @@ public class MySocialProfile {
 	private String password;
 	private String email;
 	private String classYear;
+	private String eventtring;
+	private String timelineString;
+	private String friendString;
 
 	private ArrayStack timeline = new ArrayStack();
 	private EventArrayPriorityQueue newQueue = new EventArrayPriorityQueue(10); //Should we keep this capacity?
@@ -139,65 +142,52 @@ public class MySocialProfile {
 	}
 
 	public void displayProfile() {
-		try {
 
-			createReadFile("MySocialProfile.txt");
+		createReadFile("MySocialProfile.txt");
 			//createWriteFile("MySocialProfile.txt");
 
-			String line;
+		String line;
 			
-			line = infoReader.readLine();
-			System.out.println("Name: " + line);
+		System.out.print("\n");
 
-			infoReader.readLine();
-			
-			line = infoReader.readLine();
-			System.out.println("Email: " + line);
 
-			line = infoReader.readLine();
-			System.out.println("Class Year: " + line);
-			
-			line = infoReader.readLine();
+		System.out.println("Name: " + name);
+		System.out.println("Email: " + email);
+		System.out.println("Class Year: " + classYear);
+		
+		System.out.println("");
+		System.out.println("Next Upcoming Event:");
+		System.out.println("");
+		
+		if (newQueue.isEmpty()) {
+			System.out.println("You have no upcoming events!");
+		}
+		
+		else{
+			System.out.println(newQueue.getMin());
+		}
 
-			System.out.println("Timeline posts:");
+		System.out.println("Timeline posts:");
+		System.out.println("");
+		
+		if (timeline.isEmpty()) {
+			System.out.println("You have no posts on your timeline!");
+		}
+		
+		else {
 			for (int t = 1; t < 4; t++) {
 				if (timeline.size()-t >= 0 && timeline.peek(timeline.size()-t) != null) {
 					System.out.println(timeline.peek(timeline.size()-t));
 				}
 			}
-			cleanupReader();
-			//cleanupWriter();
-		}  
-
-		catch (IOException e) {
-			e.printStackTrace();
 		}
-	}
+	}  
 	
 	public void makeEvent(int m, int d, int y, int h, int min, String desc){
 		
 		Event newEvent = new Event(m, d, y, h, min, desc);
 		newQueue.insert(newEvent);
-		/*
-		Scanner scan = new Scanner(System.in);
-		//Calendar userCal = Calendar.getInstance();  
-		int month, day, year, hour, min;
-		String description;
-		
-		System.out.println("Please enter a description of your event: ");
-		description = scan.nextLine();
-		System.out.println("Please enter the month of your event in the form of a number (MM): ");
-		month = scan.nextInt();								
-		System.out.println("Please enter the day of your event (DD): ");
-		day = scan.nextInt();	
-		System.out.println("Please enter the year of your event (YYYY): "); 					
-		year = scan.nextInt();	
-		System.out.println("Please enter the hour of the day of your event (0-23): ");
-		hour = scan.nextInt();	
-		System.out.println("Please enter the minute of the hour of your event (00-59): ");
-		min = scan.nextInt();	
-		
-		*/
+
 	}
 	
 	
@@ -283,16 +273,9 @@ public class MySocialProfile {
 			createReadFile("MySocialProfile.txt");
 			
 			name = infoReader.readLine();
-			System.out.println(name);
-			
 			password = infoReader.readLine();
-			System.out.println(password);
-			
 			email = infoReader.readLine();
-			System.out.println(email);
-			
 			classYear = infoReader.readLine();
-			System.out.println(classYear);
 			
 			cleanupReader();
 			
@@ -301,7 +284,6 @@ public class MySocialProfile {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public static void main(String[] args) {
 		MySocialProfile person = new MySocialProfile();
