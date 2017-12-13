@@ -53,7 +53,9 @@ public class MySocialProfileApp {
 					
 				case 'l':
 					MySocialProfile loginPerson = new MySocialProfile();
+					//loginPerson.makeFiles();
 					//loginPerson.createReadFile();
+					
 					
 					System.out.println("\n Please enter your username (which should be your first and last name seperated by a space)");
 					String lName = getInfo.nextLine();
@@ -62,12 +64,15 @@ public class MySocialProfileApp {
 					
 					if(loginPerson.checkInfo(lName, lPassword)) {
 						loginPerson.loginUser();
+						
 
 						do {
 							System.out.println("\n Enter a letter: \n\n Post to your timeline (p) \n Add an event (e)"); //Do we want to welcome the user?
 							System.out.println(" View your friends (v) \n Add/remove friends (f) \n\n Log out (l)");
 							loginChoice = getChar();
-							//loginPerson.loginUser();
+							
+							loginPerson.storeValues();
+							
 							switch(loginChoice){
 								case 'p':
 									System.out.println("Please enter the text you would like in your timeline post.");
@@ -103,16 +108,21 @@ public class MySocialProfileApp {
 									break;
 									
 								case 'l':
+									
 									loginPerson.logoutUser();
+									
 									System.out.println("\nLogged Out Successfully");
 									break;
 								
 								case 'd':
 									loginPerson.displayProfile();
+									loginPerson.storeValues();
+									//loginPerson.testWrite();
 								default:
 									System.out.print("\nNot a valid entry.\n");
 							}
 						}
+						
 						while (loginChoice != 'l'); {
 							
 						}
@@ -120,6 +130,7 @@ public class MySocialProfileApp {
 					else {
 						System.out.println("Login information is incorrect");
 					}
+					
 					
 					//loginPerson.cleanupReader();
 					break;
