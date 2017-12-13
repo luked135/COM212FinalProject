@@ -10,24 +10,32 @@ import java.util.Scanner;
 public class MySocialProfile {
 	
 	private BufferedWriter infoWriter;
-	private FileWriter newFile;
+	private FileWriter fileWrite;
 	
 	private BufferedReader infoReader;
 	private FileReader fileRead;
 	
-	private String line1;
-	private String line2;
-	private String line3;
-	private String line4;
+	private File oldFile;
+	private File newerFile;
+	
+	private String name;
+	private String password;
+	private String email;
+	private String classYear;
 
 	private ArrayStack timeline = new ArrayStack();
-	private EventArrayPriorityQueue newQueue = new EventArrayPriorityQueue(10);
+	private EventArrayPriorityQueue newQueue = new EventArrayPriorityQueue(10); //Should we keep this capacity?
 	private DoublyLinkedList friendList = new DoublyLinkedList();
+	
+	public void makeFiles(){
+		oldFile = new File("C:/Users/luked/Desktop/compSci/com212/FinalProject MySocialProfile.txt");
+		newerFile = new File("C:/Users/luked/Desktop/compSci/com212/FinalProject TempFile.txt");
+	}
 
 	public void createWriteFile(String fileName) {
 		try {
-			newFile = new FileWriter(fileName);
-			infoWriter = new BufferedWriter(newFile);
+			fileWrite = new FileWriter(fileName);
+			infoWriter = new BufferedWriter(fileWrite);
 			
 		}
 		
@@ -119,8 +127,8 @@ public class MySocialProfile {
 		cleanupReader();
 		}
 
-			/*String test = "A §B §C §D";
-			String[] output = test.split("\\§");
+			/*String test = "A B C D";
+			String[] output = test.split("\\");
 			for (int i =0; i < output.length; i++)
 			System.out.println(output[i]);
 			*/
@@ -134,19 +142,22 @@ public class MySocialProfile {
 		try {
 
 			createReadFile("MySocialProfile.txt");
+			//createWriteFile("MySocialProfile.txt");
 
-			String line1 = infoReader.readLine();
-			System.out.println("Name: " + line1);
-
+			String line;
 			
+			line = infoReader.readLine();
+			System.out.println("Name: " + line);
+
 			infoReader.readLine();
-			line2 = infoReader.readLine();
-			System.out.println("Email: " + line2);
-
-			line3 = infoReader.readLine();
-			System.out.println("Class Year: " + line3);
 			
-			line4 = infoReader.readLine();
+			line = infoReader.readLine();
+			System.out.println("Email: " + line);
+
+			line = infoReader.readLine();
+			System.out.println("Class Year: " + line);
+			
+			line = infoReader.readLine();
 
 			System.out.println("Timeline posts:");
 			for (int t = 1; t < 4; t++) {
@@ -155,6 +166,7 @@ public class MySocialProfile {
 				}
 			}
 			cleanupReader();
+			//cleanupWriter();
 		}  
 
 		catch (IOException e) {
@@ -169,7 +181,6 @@ public class MySocialProfile {
 		/*
 		Scanner scan = new Scanner(System.in);
 		//Calendar userCal = Calendar.getInstance();  
-
 		int month, day, year, hour, min;
 		String description;
 		
@@ -232,7 +243,7 @@ public class MySocialProfile {
 	public void cleanupWriter(){
 		try{
 			infoWriter.close();
-			newFile.close();
+			fileWrite.close();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -250,50 +261,47 @@ public class MySocialProfile {
 		}
 		
 	}
-
+	
+	/*
+	I think the reason this isnt working is because to use the rename method you need to have an empty file that you rename the previous file to
+	I dont think you can just rename a file with a name of an existing file
+	*/
 	public void logoutUser() {
-		try {
-			createReadFile("MySocialProfile.txt");
-			createWriteFile("TempFile.txt");
-			String line;
-
-			/*
-			for (int i = 0; i < 7; i++) {
-				line = infoReader.readLine();
-				writeInfo("");
-			}
-			*/
-
-			line = infoReader.readLine();
-			System.out.println(line);
-			writeInfo(line1);
-			line = infoReader.readLine();
-			writeInfo(line2);
-			line = infoReader.readLine();
-			writeInfo(line3);
-			line = infoReader.readLine();
-			writeInfo(line4);
-
-			/*
-			for (int i = 1; i < 5; i++) {
-				line = infoReader.readLine();
-				writeInfo(line+i);
-			}
-			*/
 		
-
-
-			//File newFile = new File ("tempFile.txt");
-			//newFile.renameTo("test.txt");
-
-			cleanupReader();
+			createWriteFile("MySocialProfile.txt");
+			
+			writeInfo(name);
+			writeInfo(password);
+			writeInfo(email);
+			writeInfo(classYear);
+			
 			cleanupWriter();
+	}
+	
+	public void storeValues(){
+		try{
+			createReadFile("MySocialProfile.txt");
+			
+			name = infoReader.readLine();
+			System.out.println(name);
+			
+			password = infoReader.readLine();
+			System.out.println(password);
+			
+			email = infoReader.readLine();
+			System.out.println(email);
+			
+			classYear = infoReader.readLine();
+			System.out.println(classYear);
+			
+			cleanupReader();
+			
 		}
-		
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public static void main(String[] args) {
 		MySocialProfile person = new MySocialProfile();
