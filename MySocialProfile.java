@@ -264,7 +264,32 @@ public class MySocialProfile {
 			writeInfo(password);
 			writeInfo(email);
 			writeInfo(classYear);
-			
+
+			if (newQueue.isEmpty()) {
+				writeInfo("You have no events!");
+			}
+			else {
+				writeInfo("");
+			}
+
+			if (timeline.isEmpty()) {
+				writeInfo("You have no posts on your timeline!");
+			}
+			else {
+				String tl = "";
+				for (int i = 0; i < timeline.size(); i++) {
+					tl = tl + timeline.peek(i) + "|";
+				}
+				writeInfo(tl);
+			}
+
+			if (friendList.isEmpty()) {
+				writeInfo("You have no friends!");
+			}
+			else {
+				writeInfo("");
+			}
+
 			cleanupWriter();
 	}
 	
