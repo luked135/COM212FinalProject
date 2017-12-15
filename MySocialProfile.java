@@ -29,11 +29,6 @@ public class MySocialProfile {
 	private ArrayStack timeline = new ArrayStack();
 	private EventArrayPriorityQueue newQueue = new EventArrayPriorityQueue(10); //Should we keep this capacity?
 	private DoublyLinkedList friendList = new DoublyLinkedList();
-	
-	public void makeFiles(){
-		oldFile = new File("C:/Users/luked/Desktop/compSci/com212/FinalProject MySocialProfile.txt");
-		newerFile = new File("C:/Users/luked/Desktop/compSci/com212/FinalProject TempFile.txt");
-	}
 
 	public void createWriteFile(String fileName) {
 		try {
@@ -69,7 +64,7 @@ public class MySocialProfile {
 		
 	}
 	
-	public boolean checkInfo(String userName, String userPassword){ //make this return a boolean later and also put this in as a parameter: String userName, String userPassword
+	public boolean checkInfo(String userName, String userPassword){
 		try{
 			createReadFile("MySocialProfile.txt");
 			String name = infoReader.readLine();
@@ -88,6 +83,7 @@ public class MySocialProfile {
 		try {
 			createReadFile("MySocialProfile.txt");
 			String line;
+			
 			for (int i = 0; i < 4; i++) {
 				infoReader.readLine();
 			}
@@ -107,8 +103,6 @@ public class MySocialProfile {
 					
 					makeEvent(month, day, year, hour, minute, description);
 				}
-
-				//printQueue(); I dont think we want to print the queue here?
 			}
 
 			line = infoReader.readLine();
@@ -130,11 +124,6 @@ public class MySocialProfile {
 		cleanupReader();
 		}
 
-			/*String test = "A B C D";
-			String[] output = test.split("\\");
-			for (int i =0; i < output.length; i++)
-			System.out.println(output[i]);
-			*/
 		catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -144,17 +133,18 @@ public class MySocialProfile {
 	public void displayProfile() {
 
 		createReadFile("MySocialProfile.txt");
-			//createWriteFile("MySocialProfile.txt");
+		String line;
 			
-		System.out.println();
+		System.out.print("\n\n");
 
+		System.out.print("User Profile");
+		System.out.println("");
 		System.out.println("Name: " + name);
 		System.out.println("Email: " + email);
 		System.out.println("Class Year: " + classYear);
 		
 		System.out.println("");
 		System.out.println("Next Upcoming Event:");
-		System.out.println("");
 		
 		if (newQueue.isEmpty()) {
 			System.out.println("You have no upcoming events!");
@@ -166,7 +156,6 @@ public class MySocialProfile {
 
 		System.out.println("");
 		System.out.println("Timeline posts:");
-		System.out.println("");
 		
 		if (timeline.isEmpty()) {
 			System.out.println("You have no posts on your timeline!");
@@ -179,21 +168,18 @@ public class MySocialProfile {
 				}
 			}
 		}
-		
 		System.out.println("");
-		System.out.println("List of Events:");
-		System.out.println("");
-		
-		if (newQueue.isEmpty()) {
-			System.out.println("You have no upcoming events!"); 
-		}
-		
-		else {
-			printQueue();
-		}
-		
-		System.out.println("");
-		
+    	System.out.println("List of Events:");
+    
+    	if (newQueue.isEmpty()) {
+      		System.out.println("You have no upcoming events!"); 
+    	}
+    
+    	else {
+      		printQueue();
+    	}
+    
+    	System.out.println("");
 	}  
 	
 	public void makeEvent(int m, int d, int y, int h, int min, String desc){
@@ -202,6 +188,7 @@ public class MySocialProfile {
 		newQueue.insert(newEvent);
 
 	}
+	
 	
 	public void checkDate(){
 		
@@ -238,6 +225,7 @@ public class MySocialProfile {
 			System.out.println("You have no friends!");
 		}
 		else {
+			System.out.println("Your friends:");
 			friendList.display(); //if there is time, make this prettier by splitting up the friend list
 		}
 	}
@@ -261,54 +249,55 @@ public class MySocialProfile {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	/*
-	I think the reason this isnt working is because to use the rename method you need to have an empty file that you rename the previous file to
-	I dont think you can just rename a file with a name of an existing file
-	*/
 	public void logoutUser() {
 		
-		createWriteFile("MySocialProfile.txt");
+			createWriteFile("MySocialProfile.txt");
 			
-		writeInfo(name);
-		writeInfo(password);
-		writeInfo(email);
-		writeInfo(classYear);
-			
-		if(newQueue.isEmpty()){
-			writeInfo("You have no events!");
-		}
-		
-		else{
-			String ev = "";
-			for(int i = 1; i <= newQueue.size(); i++){
-				ev = ev + newQueue.getEvent(i).getMonth() + "<" + newQueue.getEvent(i).getDay() + "<" + newQueue.getEvent(i).getYear() + "<" + newQueue.getEvent(i).getHour() + "<" + newQueue.getEvent(i).getMinute() + "<" + newQueue.getEvent(i).getDescription() + "|";
+			writeInfo(name);
+			writeInfo(password);
+			writeInfo(email);
+			writeInfo(classYear);
+
+			if (newQueue.isEmpty()) {
+				writeInfo("You have no events!");
 			}
-			writeInfo(ev);
-		}
-		
-		
-		if(timeline.isEmpty()){
-			writeInfo("You have no posts on your timeline!");
-		}
-		else{
-			String tl = "";
-			for(int i = 0; i < timeline.size(); i++){
-				tl = tl + timeline.peek(i) + "|";
+			else {
+				String ev = "";
+      			
+      			for(int i = 1; i <= newQueue.size(); i++){
+        			ev = ev + newQueue.getEvent(i).getMonth() + "<" + newQueue.getEvent(i).getDay() + "<" + newQueue.getEvent(i).getYear() + "<" + newQueue.getEvent(i).getHour() + "<" + newQueue.getEvent(i).getMinute() + "<" + newQueue.getEvent(i).getDescription() + "|";
+      			}
+      			writeInfo(ev);
 			}
-			writeInfo(tl);
-		}
-			
-		if(friendList.isEmpty()){
-			writeInfo("You have no friends!");
-		}
-			
-		cleanupWriter();
+
+			if (timeline.isEmpty()) {
+				writeInfo("You have no posts on your timeline!");
+			}
+			else {
+				String tl = "";
+				for (int i = 0; i < timeline.size(); i++) {
+					tl = tl + timeline.peek(i) + "|";
+				}
+				writeInfo(tl);
+			}
+
+			if (friendList.isEmpty()) {
+				writeInfo("You have no friends!");
+			}
+			else {
+				String fr = "";
+				while (friendList.isEmpty() == false) {
+					fr = fr + friendList.first() + "|";
+					friendList.removeFirst();
+				}
+				writeInfo(fr);
+			}
+
+			cleanupWriter();
 	}
 	
-	//Might be able to put this just above logoutUser in main
 	public void storeValues(){
 		try{
 			createReadFile("MySocialProfile.txt");
@@ -324,19 +313,5 @@ public class MySocialProfile {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-		MySocialProfile person = new MySocialProfile();
-		person.loginUser();
-		/*
-		person.createReadFile();
-		person.postTimeline("I like dogs");
-		person.postTimeline("a");
-		person.postTimeline("b");
-		person.postTimeline("c");
-		person.displayProfile();
-		person.cleanupReader();
-		*/
 	}
 }
