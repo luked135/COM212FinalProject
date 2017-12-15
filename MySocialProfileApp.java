@@ -1,13 +1,6 @@
 import java.io.*;
 import java.util.Scanner;
-/* import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;*/
-/**
-*
-*/
+
 public class MySocialProfileApp {
 	
 	public static void main(String[] args) throws IOException { 
@@ -53,9 +46,6 @@ public class MySocialProfileApp {
 					
 				case 'l':
 					MySocialProfile loginPerson = new MySocialProfile();
-					//loginPerson.makeFiles();
-					//loginPerson.createReadFile();
-					
 					
 					System.out.println("\n Please enter your username (which should be your first and last name seperated by a space)");
 					String lName = getInfo.nextLine();
@@ -64,27 +54,27 @@ public class MySocialProfileApp {
 					
 					if(loginPerson.checkInfo(lName, lPassword)) {
 						loginPerson.loginUser();
+						loginPerson.storeValues();
 						loginPerson.checkDate();
 						loginPerson.displayProfile();
 
 						do {
-							System.out.println("\n Enter a letter: \n\n Post to your timeline (p) \n Add an event (e)"); //Do we want to welcome the user?
+							System.out.println("\n\n Enter a letter: \n\n Post to your timeline (p) \n Add an event (e)"); //Do we want to welcome the user?
 							System.out.println(" View your friends (v) \n Add/remove friends (f) \n\n Log out (l)");
 							loginChoice = getChar();
 							
-							loginPerson.storeValues();
-							
 							switch(loginChoice){
+								
 								case 'p':
 									System.out.println("\n");
 									System.out.println("Please enter the text you would like in your timeline post.");
 									String post = getInfo.nextLine();
 									loginPerson.postTimeline(post);
-									loginPerson.storeValues();
 									loginPerson.displayProfile();
 									break;
 								
 								case 'e':
+									System.out.println("\n");
 									System.out.println("Please enter a description of your event: ");
 									String description = getInfo.nextLine();
 									System.out.println("Please enter the month of your event in the form of a number (MM): ");
@@ -104,11 +94,13 @@ public class MySocialProfileApp {
 									break;
 									
 								case 'v':
+									System.out.println("\n");
 									loginPerson.displayFriends();
 									break;
 									
 								case 'f':
-									System.out.println("Please enter the email of the friend you want to add to your list, or the friend you want to remove:");
+									System.out.println("\n");
+									System.out.println("Please enter the email of the friend you want to add to your list, or the email of the friend you want to remove:");
 									String friend = getInfo.nextLine();
 									loginPerson.manageFriends(friend);
 									loginPerson.displayProfile();
@@ -121,10 +113,6 @@ public class MySocialProfileApp {
 									System.out.println("\nLogged Out Successfully");
 									break;
 								
-								case 'd':
-									loginPerson.displayProfile();
-									loginPerson.storeValues();
-									//loginPerson.testWrite();
 								default:
 									System.out.print("\nNot a valid entry.\n");
 							}
@@ -137,9 +125,6 @@ public class MySocialProfileApp {
 					else {
 						System.out.println("Login information is incorrect");
 					}
-					
-					
-					//loginPerson.cleanupReader();
 					break;
 				
 				case 'q':
@@ -154,18 +139,19 @@ public class MySocialProfileApp {
 			
 		}
 	}
+	
 	public static String getString() throws IOException { 
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		String s = br.readLine();
 		return s;
 	}
+	
 	public static char getChar() throws IOException { 
 		String s = getString();
 		return s.charAt(0);
 	}
 	
-	//Might not need this method
 	public static int getInt() throws IOException { 
 	
 		String s = getString();
