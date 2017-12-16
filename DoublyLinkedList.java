@@ -1,6 +1,6 @@
 /**
 * A DoublyLinkedList class, holding a list of DNodes
-* A DNode stores a GameScore element
+* This is modified code from Project #1, changed to create strings instead of gamescores
 */
 
 public class DoublyLinkedList {
@@ -9,8 +9,10 @@ public class DoublyLinkedList {
 	private DNode trailer;		//The trailer sentinel DNode
 	private int size;			//The number of nodes in the list
 
-	//Constructs an initially empty list
-	//Creates and links the sentinel nodes to each other
+	/**
+	* Constructs an initially empty list
+	* Creates and links the sentinel nodes to each other
+	*/
 	public DoublyLinkedList() {
 		header = new DNode(null, null, null);		//create header
 		trailer = new DNode(null, header, null);	//trailer is preceded by header
@@ -18,20 +20,26 @@ public class DoublyLinkedList {
 		size = 0;
 	}
 
-	//ACCESS METHODS
-
-	//Returns the size, number of nodes in the list
+	/**
+	* This method finds the number of nodes in the list
+	* @return the size of the list
+	*/
 	public int size() {
 		return size;
 	}
 
-	//Returns true if the list is empty, false otherwise
+	/**
+	* Checks if the list is empty
+	* @Return true if the list is empty, false otherwise
+	*/
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
-	//Returns (but doesn't remove) the first element
-	//That's the element stored at the node after the header
+	/**
+	* Finds the element that is stored at the node after the header
+	* @return the first element of the list, without removing it
+	*/
 	public String first() {
 		if (isEmpty()) {
 			return null;				//If the list is empty
@@ -40,8 +48,10 @@ public class DoublyLinkedList {
 		return header.getNext().getElement();
 	}
 
-	//Returns (but doesn't remove) the last element
-	//That's the element stored at the node before the trailer
+	/**
+	* Finds the last element in the list
+	* @return the last element of the list, without removing it
+	*/
 	public String last() {
 		if (isEmpty()) {
 			return null;				//If the list is empty
@@ -50,36 +60,42 @@ public class DoublyLinkedList {
 		return trailer.getPrev().getElement();
 	}
 
-	//UPDATE METHODS
-
-	//Adds the newScore element to the front of the list
+	/**
+	* Adds an element to the front of the list
+	* @param n The element to be added
+	*/
 	public void addFirst(String n) {
-		//Use our private helper method
 		addBetween(n, header, header.getNext());		//Insert just after the header
 	}
 
-	//Adds the newScore element to the end of the list
+	/**
+	* Adds an element to the end of the list
+	* @param n The element to be added
+	*/
 	public void addLast(String n) {
-		//Use our private helper method
 		addBetween(n, trailer.getPrev(), trailer);	//Insert just before the trailer
 	}
 
-	//Removes and returns the first element of the list
+	/**
+	* Removes and returns the first element of the list
+	* @return the string that is removed
+	*/
 	public String removeFirst() {
 		if (isEmpty())
 			return null;					//Nothing to remove or return
 		else {
-			//Use our private helper method
 			return remove(header.getNext());
 		}
 	}
 
-	//Removes and returns the last element of the list
+	/**
+	* Removes and returns the last element of the list
+	* @return the string that is removed
+	*/
 	public String removeLast() {
 		if (isEmpty())
 			return null;					//Nothing to remove or return
 		else {
-			//Use our private helper method
 			return remove(trailer.getPrev());
 		}
 	}
@@ -98,12 +114,12 @@ public class DoublyLinkedList {
 		System.out.println("");
 	}
 
-
-
-
-	//---------------------  OUR PRIVATE HELPER METHODS  --------------------
-
-	//Adds the newScore in between the given nodes
+	/**
+	* Adds the newScore in between the given nodes
+	* @param n The string being added to the list
+	* @param prevNode the node the new string goes after
+	* @param nextNode the node the new string comes before
+	*/
 	private void addBetween(String n, DNode prevNode, DNode nextNode) {
 		DNode newNode = new DNode(n, prevNode, nextNode);	//Create and link the new node
 		//Update the given nodes to link to the new node
@@ -112,7 +128,11 @@ public class DoublyLinkedList {
 		size++;
 	}
 
-	//Removes the given node from the list and returns its element
+	/**
+	* Removes the given node from the list and returns its element
+	* @param xNode The node being removed from the list
+	* @return The removed node
+	*/
 	private String remove(DNode xNode) {
 		//Get the nodes on either side of xNode
 		DNode prevNode = xNode.getPrev();
@@ -124,8 +144,12 @@ public class DoublyLinkedList {
 		return xNode.getElement();
 	}
 
-	//--------------------------------------------------------------------------------------------
-
+	/**
+	* Finds a given node in the list
+	* Searches for a string that the node contains
+	* @param target The string being searched for
+	* @return The node containing the string if it is found, null if no matching string is found
+	*/
 	public DNode find(String target) {
 		DNode prev = header;
 		DNode current = prev.getNext();
@@ -142,7 +166,11 @@ public class DoublyLinkedList {
 
 	}
 
-	public void add(String n){ 
+	/**
+	* Adds a new node containing a string to the end of the list
+	* @param s The string that is to be contained within the new node
+	*/
+	public void add(String s){ 
 		DNode prev = header;
 		DNode current = prev.getNext(); 
 			
@@ -155,25 +183,30 @@ public class DoublyLinkedList {
 		}
 
 		if (prev == null) {
-			addFirst(n);		//Adds to the beginning of the list
+			addFirst(s);		//Adds to the beginning of the list
 		}
 
 		else if (current == null) {
-			addLast(n);		//Adds to the end of the list
+			addLast(s);		//Adds to the end of the list
 		}
 
 		else {
-			DNode newNode = new DNode(n, current.getNext(), current.getPrev());
-			addBetween(n, prev, current);		//Positions the new node between the two surrounding nodes, bigger and smaller
+			DNode newNode = new DNode(s, current.getNext(), current.getPrev());
+			addBetween(s, prev, current);		//Positions the new node between the two surrounding nodes, bigger and smaller
 		}
 
 	}
 
-	public DNode delete(String gameScore) { 
+	/**
+	* Deletes and returns a node containing a given string
+	* @param s The string the target node should contain
+	* @return The removed node if a match is found, null otherwise
+	*/
+	public DNode delete(String s) { 
 		DNode prev = header;
 		DNode current = prev.getNext();    
 
-		while (current.getElement() !=null && !current.getElement().equals(gameScore)) {
+		while (current.getElement() !=null && !current.getElement().equals(s)) {
 			prev = current;
 			current = current.getNext();		//Keeps checking for equivalance, then moving to the next nodes
 		}
@@ -193,5 +226,3 @@ public class DoublyLinkedList {
 		}
 	}
 }
-
-	//--------------------------------------------------------------------------------------------
