@@ -1,0 +1,8 @@
+User Manual:
+
+Before the program can be run all the java files  must be compiled. More
+specifically ArrayStack, DNode, DoublyLinkedList, Event, EventArrayPriorityQueue,
+MySocialProfile, and MySocialProfileApp must all be compiled.
+
+Once the files listed above are compiled, run the java file called 
+MySocialProfileApp and follow the instructions provided in the terminal.
