@@ -1,7 +1,6 @@
  /**
   * Implementation of a generic stack ADT using a fixed-length array.
-  * Stack: a collection of objects that are inserted
-  * and removed according to the last-in first-out (LIFO) principle.
+  * This is the ArrayStack class used in Project 2, with a few additional methods added
   */
 
 public class ArrayStack<E> {
@@ -17,7 +16,7 @@ public class ArrayStack<E> {
 
   public ArrayStack(int cap) {
     capacity = cap;
-    S = (E[]) new Object[capacity]; // compiler may give warning, but this is ok
+    S = (E[]) new Object[capacity];
   }
 
   /**
@@ -55,6 +54,11 @@ public class ArrayStack<E> {
     return S[top];
   }
 
+  /**
+  * Inspect the element at a given indx.
+  * @param n The index being checked in the stack.
+  * @return The element at the nth index.
+  */
   public E peek(int n) {
     return S[n];
   }
@@ -73,6 +77,7 @@ public class ArrayStack<E> {
   
   /**
   * Returns a string representation of the stack contents
+  * @return The created string
   */
   public String toString() {
     String s;
@@ -83,28 +88,5 @@ public class ArrayStack<E> {
 	       s += ", " + S[i];
       }
     return s + "]";
-  }
-
-
- /**
-  * Test the class by performing a series of operations
-  */
-  public static void main(String[] args) {
-    int i;
-    ArrayStack<Integer> A = new ArrayStack<>(15);  //A stack of size 15 of integers
-    A.push(7);
-    A.push(6);
-    i = A.pop();
-    A.push(9);
-    i = A.pop();
-    System.out.println(A);
-
-    ArrayStack<Character> B = new ArrayStack<>();    //A stack of size 1000 of characters
-    char s;
-    B.push('B');
-    B.push('>');
-    s = B.pop();
-    B.push('5');
-    System.out.println(B);
   }
 }
